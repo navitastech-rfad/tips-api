@@ -1,6 +1,6 @@
 --liquibase formatted sql
 --changeset Jonathan.Solomon:2018-08-01-jonathan-01
-CREATE TABLE IF NOT EXISTS tips-info
+CREATE TABLE IF NOT EXISTS tips_info
 (
     tips_id       	UUID       		DEFAULT gen_random_uuid(),
     first_name		VARCHAR(50),
