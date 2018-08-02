@@ -1,0 +1,2 @@
+databaseChangeLog:
+- include: {file: 2018-07/2018-07-28-create-table-case_info.sql, relativeToChangelogFile: true}
