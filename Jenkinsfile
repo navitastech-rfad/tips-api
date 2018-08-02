@@ -168,11 +168,11 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'docker build . -t 550522744793.dkr.ecr.us-east-1.amazonaws.com/caseapi:${BUILD_NUMBER}'
-                sh 'docker tag 550522744793.dkr.ecr.us-east-1.amazonaws.com/caseapi:${BUILD_NUMBER} 550522744793.dkr.ecr.us-east-1.amazonaws.com/caseapi:latest'
+                sh 'docker build . -t 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER}'
+                sh 'docker tag 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER} 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:latest'
                 sh '/home/jenkins/ecr-login.sh | /bin/bash '
-                sh 'docker push 550522744793.dkr.ecr.us-east-1.amazonaws.com/caseapi:${BUILD_NUMBER}'
-                sh 'docker push 550522744793.dkr.ecr.us-east-1.amazonaws.com/caseapi:latest'
+                sh 'docker push 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER}'
+                sh 'docker push 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:latest'
             }
         }
 
@@ -184,7 +184,7 @@ pipeline {
 
             steps {
 
-              sh 'ecs-deploy  -c DevAppCluster -n caseapi -i 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:${BUILD_NUMBER} -r us-east-1 -t 420'
+              sh 'ecs-deploy  -c DevAppCluster -n tipsapi -i 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER} -r us-east-1 -t 420'
 
             }
         
