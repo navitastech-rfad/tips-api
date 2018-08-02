@@ -1,0 +1,21 @@
+server:
+  port: 8290
+
+spring:
+  datasource:
+    url: jdbc:postgresql://devdb1.cby02zmi8jpc.us-east-1.rds.amazonaws.com:5432/devdb1?currentSchema=rfadcase
+    username: rfadcase
+    password: rfadcase
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${db.schema}
+  liquibase:
+    default-schema: ${db.schema}
+    
+  profiles:
+    active: local
+    
+db:
+  schema: rfadcase
