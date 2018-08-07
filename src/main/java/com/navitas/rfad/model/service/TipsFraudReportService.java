@@ -17,7 +17,7 @@ public class TipsFraudReportService {
 	@Autowired
 	TipsFraudReportRepository tipsFraudReportRepository;
 	
-	List<TipsFraudReport >getAllFraudReports() {
+	public List<TipsFraudReport >getAllFraudReports() {
 		Iterable<TipsFraudReport> allFraudReports = tipsFraudReportRepository.findAll();
 		
 		List<TipsFraudReport> result = StreamSupport
