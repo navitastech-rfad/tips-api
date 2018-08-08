@@ -49,7 +49,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     // http.cors().and().csrf().disable().authorizeRequests().antMatchers("/actuator/**").permitAll();
     super.configure(http);
     http.authorizeRequests()
-        .antMatchers("/actuator/**")
+        .antMatchers("/api/tips/create", "/actuator/**")
         .permitAll()
         .and()
         .authorizeRequests()
