@@ -1,2 +1,3 @@
 databaseChangeLog:
 - include: {file: 2018-08/2018-08-02-create-table-tips.sql, relativeToChangelogFile: true}
+- include: {file: 2018-08/2018-08-07-update-table-tips.sql, relativeToChangelogFile: true}

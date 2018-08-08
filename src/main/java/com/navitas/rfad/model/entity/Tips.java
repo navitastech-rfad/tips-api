@@ -3,6 +3,8 @@ package com.navitas.rfad.model.entity;
 import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.Objects;
+import javax.persistence.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 //import javax.validation.constraints.Pattern;
@@ -39,6 +41,60 @@ public class Tips {
     
   @Column(name="updated_date", nullable=true)
   private Timestamp updatedDate;
+  
+  @Column(name="company", nullable=true)
+  private String company;
+  
+  @Column(name="status", nullable=true)
+  private String status = "PROCESSED";
+  
+  @Column(name="analytical_output", nullable=true)
+  private String analyticalOutput;
+  
+  @Column(name="tips_comment", nullable=true)
+  private String comment = "PROCESSED";
+  
+  
+  //@JsonInclude()
+  @Transient 
+  private MultipartFile file;
+  
+  
+  public String getAnalyticalOutput() {
+	  return this.analyticalOutput;
+  }
+  
+  public void setAnalyticalOutput( String output ) {
+	  this.analyticalOutput = output;
+  }
+  
+  public String getComment(  ) {
+	  return this.comment;
+  }
+  public void setComment( String comment ) {
+	  this.comment = comment;
+  }
+  
+  public MultipartFile getFile() {
+	  return file;
+  }
+  
+  public void setFile( MultipartFile file ) {
+	  this.file = file;
+  }
+  
+  public String getCompany() {
+	  return this.company;
+  }
+  
+  public void setCompany(String company ) {
+	  this.company = company;
+  }
+  
+  public String getStatus() {
+	  return status;
+  }
+  
   
   public UUID getId() {
     return id;
