@@ -1,48 +1,51 @@
-package com.navitas.rfad.model.entity;
+package com.navitas.rfad.bean;
+
+import com.navitas.rfad.model.entity.Tips;
 
 import java.util.UUID;
 
-//import javax.validation.constraints.Pattern;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="tips_info")
 public class TipsFraudReport {
+  private UUID id;
 
+  private String entity;
 
-	private static final long serialVersionUID = 7659513807301586843L;
+  private String status;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "tips_id", nullable = false)
-	private UUID id;
+  private String comment;
 
-	@Column(name = "entity", nullable = true)
-	private String entity;
+  public TipsFraudReport() {}
 
-	@Column(name = "status", nullable = true)
-	private String status;
+  public TipsFraudReport(Tips tips) {}
 
-	public String getEntity() {
-		return entity;
-	}
+  public UUID getId() {
+    return id;
+  }
 
-	public void setEntity(String entity) {
-		this.entity = entity;
-	}
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
-	public String getStatus() {
-		return status;
-	}
+  public String getEntity() {
+    return entity;
+  }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+  public void setEntity(String entity) {
+    this.entity = entity;
+  }
 
+  public String getStatus() {
+    return status;
+  }
 
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 }

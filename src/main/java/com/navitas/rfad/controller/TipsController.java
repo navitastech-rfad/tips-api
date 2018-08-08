@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.navitas.rfad.bean.TipsFraudReport;
 import com.navitas.rfad.model.entity.Tips;
-import com.navitas.rfad.model.entity.TipsFraudReport;
 import com.navitas.rfad.model.repository.TipsRepository;
-import com.navitas.rfad.model.service.TipsFraudReportService;
+import com.navitas.rfad.service.TipsFraudReportService;
 
 import java.util.List;
 import java.util.Optional;
