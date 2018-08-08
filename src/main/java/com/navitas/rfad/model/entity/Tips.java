@@ -1,18 +1,23 @@
 package com.navitas.rfad.model.entity;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 import java.util.Objects;
-import javax.persistence.Transient;
-import org.springframework.web.multipart.MultipartFile;
+import java.util.UUID;
 
-import javax.persistence.*;
 //import javax.validation.constraints.Pattern;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="tips_info")
 public class Tips {
-	
   private static final long serialVersionUID = 7659513807301586843L;
 
   @Id
@@ -94,8 +99,11 @@ public class Tips {
   public String getStatus() {
 	  return status;
   }
-  
-  
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
   public UUID getId() {
     return id;
   }
@@ -151,7 +159,14 @@ public class Tips {
   public void setUpdatedDate(Timestamp updatedDate) {
 	this.updatedDate = updatedDate;
   }
-  
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
   @Override
   public boolean equals(Object obj) {

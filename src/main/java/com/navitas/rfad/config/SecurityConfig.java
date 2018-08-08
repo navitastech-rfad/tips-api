@@ -1,66 +1,60 @@
 package com.navitas.rfad.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.navitas.rfad.filters.JwtAuthenticationFilter;
-import com.navitas.rfad.filters.JwtAuthorizationFilter;
-import com.navitas.rfad.model.repository.PersonRepository;
-
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
+import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
+import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource; 
 
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-  @Inject private UserDetailsService userDetailsService;
+@EnableGlobalMethodSecurity(securedEnabled = true)
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+  @Inject
+  public void configureGlobal(final AuthenticationManagerBuilder auth) {
 
-  @Inject private PersonRepository personRepository;
+    final SimpleAuthorityMapper mapper = new SimpleAuthorityMapper();
+    //    mapper.setConvertToUpperCase(true);
 
-  @Inject private ObjectMapper mapper;
+    final KeycloakAuthenticationProvider provider = keycloakAuthenticationProvider();
+    provider.setGrantedAuthoritiesMapper(mapper);
 
-  @Value("${security.jwt.key-value}")
-  private String verifierKey;
-
-  @Bean
-  protected PasswordEncoder passwordEncoder() {
-    return new Pbkdf2PasswordEncoder();
+    auth.authenticationProvider(provider);
   }
 
+  @Bean
+  public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
+    return new KeycloakSpringBootConfigResolver();
+  }
+
+  @Bean
   @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+    return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
   }
   
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.cors()
-        .and()
-        .csrf()
-        .disable()
-        .authorizeRequests()
-        .antMatchers("/api/user/register", "/api/users/profile1/**", "/actuator/**")
+    // http.cors().and().csrf().disable().authorizeRequests().antMatchers("/actuator/**").permitAll();
+    super.configure(http);
+    http.authorizeRequests()
+        .antMatchers("/actuator/**")
         .permitAll()
         .and()
         .authorizeRequests()
         .anyRequest()
-        .authenticated()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .addFilter(new JwtAuthenticationFilter(authenticationManager(), personRepository, mapper))
-        .addFilter(new JwtAuthorizationFilter(authenticationManager(), verifierKey));
+        .authenticated();
   }
 
   @Bean

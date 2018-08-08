@@ -1,3 +1,8 @@
 logging:
   level:
     com.navitas.rfad: DEBUG
+    org.keycloak: DEBUG
+    org.springframework.security: DEBUG
+    
+#keycloak:
+#  auth-server-url: http://localhost:8092/auth

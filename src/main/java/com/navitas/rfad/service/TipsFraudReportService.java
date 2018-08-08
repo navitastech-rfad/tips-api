@@ -6,28 +6,46 @@ import com.navitas.rfad.model.repository.TipsRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@Service
+@Named
 public class TipsFraudReportService {
-
-  @Autowired TipsRepository tipsRepo;
+  @Inject private TipsRepository tipsRepo;
 
   public List<TipsFraudReport> getAllFraudReports() {
     final Iterable<Tips> allFraudReports = tipsRepo.findAll();
 
     final List<TipsFraudReport> result =
-        StreamSupport.stream(allFraudReports.spliterator(), false).collect(Collectors.toList());
+        StreamSupport.stream(allFraudReports.spliterator(), false)
+            .map(TipsFraudReport::new)
+            .collect(Collectors.toList());
 
     return result;
   }
 
-  TipsFraudReport getFraudReportById(Integer reportId) {
-    final Optional<TipsFraudReport> tipsFraudReport = tipsRepo.findById(reportId);
-    return tipsFraudReport.get();
+  public TipsFraudReport getFraudReportById(String reportId) {
+    final Optional<Tips> tip = tipsRepo.findById(UUID.fromString(reportId));
+
+    return new TipsFraudReport(tip.get());
+  }
+
+  public TipsFraudReport updateService(TipsFraudReport updatedCase) {
+    final Optional<Tips> entity = tipsRepo.findById(updatedCase.getId());
+
+    if (entity.isPresent()) {
+      final Tips tips = entity.get();
+      tips.setComment(updatedCase.getComment());
+      tips.setCompany(updatedCase.getEntity());
+      tips.setStatus(updatedCase.getStatus());
+      tipsRepo.save(tips);
+      return updatedCase;
+    } else {
+      throw new RuntimeException();
+    }
   }
 }

@@ -15,7 +15,12 @@ public class TipsFraudReport {
 
   public TipsFraudReport() {}
 
-  public TipsFraudReport(Tips tips) {}
+  public TipsFraudReport(Tips tips) {
+    this.id = tips.getId();
+    this.entity = tips.getCompany();
+    this.status = tips.getStatus();
+    this.comment = this.getComment();
+  }
 
   public UUID getId() {
     return id;
