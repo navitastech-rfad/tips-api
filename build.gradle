@@ -21,6 +21,7 @@ buildscript {
             ],            
 
             misc: [
+				'org.keycloak:keycloak-spring-boot-starter:4.2.1.Final',
                 'io.jsonwebtoken:jjwt:0.9.1',
                 'javax.inject:javax.inject:1',
                 'commons-io:commons-io:2.5',

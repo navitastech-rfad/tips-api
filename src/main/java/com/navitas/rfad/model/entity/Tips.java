@@ -1,11 +1,16 @@
 package com.navitas.rfad.model.entity;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 import java.util.Objects;
+import java.util.UUID;
 
-import javax.persistence.*;
 //import javax.validation.constraints.Pattern;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="tips_info")
@@ -33,7 +38,10 @@ public class Tips {
   
   @Column(name="description", nullable=false)
   private String description;
-  
+
+  @Column(name = "description", nullable = false)
+  private String description;
+
   @Column(name="created_date", nullable=true)
   private Timestamp createdDate;
     
