@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.navitas.rfad.model.entity.Tips;
+import com.navitas.rfad.model.entity.TipsFraudReport;
 import com.navitas.rfad.model.repository.TipsRepository;
+import com.navitas.rfad.model.service.TipsFraudReportService;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,9 @@ public class TipsController {
     private final TipsRepository tipsRepository;
 
     @Autowired
+    private TipsFraudReportService tipsFraudReportService;
+
+    @Autowired
     public TipsController(TipsRepository tipsRepository) {
         this.tipsRepository = tipsRepository;
     }
@@ -25,6 +30,11 @@ public class TipsController {
     @PostMapping(value = "/tips/create/")
     public ResponseEntity<Tips> create(@RequestBody Tips tips) {
         return new ResponseEntity<>(tipsRepository.save(tips), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/tips/")
+    public ResponseEntity<List<TipsFraudReport>> retrieve() {
+        return new ResponseEntity<>(tipsFraudReportService.getAllFraudReports(), HttpStatus.OK);
     }
 
 }
