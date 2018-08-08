@@ -184,7 +184,7 @@ pipeline {
 
             steps {
 
-              sh 'ecs-deploy  -c DevAppCluster -n tipsapi -i 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER} -r us-east-1 -t 420'
+              sh 'ecs-deploy  -c dev-APICluster -n tipsapi -i 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER} -r us-east-1 -t 420'
 
             }
         
@@ -214,8 +214,9 @@ pipeline {
             }
            
             steps {
-                echo 'Deploy QA'
-                echo 'Sanity Checks'
+                sh 'ecs-deploy  -c qa-APICluster -n tipsapi -i 550522744793.dkr.ecr.us-east-1.amazonaws.com/tipsapi:${BUILD_NUMBER} -r us-east-1 -t 420'
+
+          
             }
         
         }
