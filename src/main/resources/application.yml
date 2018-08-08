@@ -19,3 +19,23 @@ spring:
     
 db:
   schema: rfadcase
+  
+# Keycloak Json properties
+keycloak:
+  realm: rfad-dev
+  auth-server-url: http://keycloak.steadystatecd.com/auth
+  resource: rfadtips
+  ssl-required: external
+  bearer-only: true
+  principal-attribute: preferred_username
+# Keycloak Security
+#  securityConstraints:
+#    -  authRoles:
+#        - admin
+#        - user
+#       securityCollections:
+#         - patterns:
+#           - /api/*
+#           - /tips/*
+# Keycloak Enable CORS
+  cors: true
